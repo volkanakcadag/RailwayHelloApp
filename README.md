@@ -1,8 +1,28 @@
 # RailwayHelloApp
 
-Minimal ASP.NET Core app for Railway deployment.
+Minimal ASP.NET Core app with PostgreSQL CRUD screen for Railway deployment tests.
 
 Requires .NET 10 SDK for local development.
+
+## Environment
+
+Fill the `.env` file with your PostgreSQL values:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=railway_hello_app
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_SSL_MODE=Disable
+```
+
+## SQL scripts
+
+Run these in order:
+
+1. `sql/001_create_app_test_records.sql`
+2. `sql/002_seed_app_test_records.sql`
 
 ## Run locally
 
@@ -15,13 +35,12 @@ Open:
 
 - http://localhost:8080
 - http://localhost:8080/health
+- http://localhost:8080/api/db-status
 
-## Deploy to Railway
+## What the app does
 
-1. Create a new GitHub repository.
-2. Upload these files.
-3. Push the repository.
-4. In Railway, create a new project from the GitHub repo.
-5. Railway will build and run the app automatically.
-
-This app listens on `PORT` and binds to `0.0.0.0`, which is required for Railway.
+- Reads PostgreSQL settings from `.env`
+- Connects to PostgreSQL using `Npgsql`
+- Lists test records
+- Inserts, updates and deletes records through the web UI
+- Commits each write operation with a database transaction
